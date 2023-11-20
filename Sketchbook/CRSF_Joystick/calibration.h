@@ -25,6 +25,15 @@
 #define CHANNEL_8_LOW_EP 989
 #define CHANNEL_8_HIGH_EP 2011
 
+#define CHANNEL_9_LOW_EP 989
+#define CHANNEL_9_HIGH_EP 2011
+
+#define CHANNEL_10_LOW_EP 989
+#define CHANNEL_10_HIGH_EP 2011
+
+#define CHANNEL_12_LOW_EP 989
+#define CHANNEL_12_HIGH_EP 2011
+
 #define CHANNEL_AUX_SW_LOW 1000
 #define CHANNEL_AUX_SW_MID 1510
 #define CHANNEL_AUX_SW_HIGH 2011
@@ -44,10 +53,10 @@ typedef struct btn_config {
     bool invert;
 } btn_config;
 
-#define NUM_BUTTONS 8
+#define NUM_BUTTONS 4
 btn_config btn_map[NUM_BUTTONS] = {
     {
-    5,                    // channel
+    8,                    // channel
     0,                    // id
     CHANNEL_AUX_SW_MID,   // lower bound
     CHANNEL_AUX_SW_HIGH,  // upper bound
@@ -55,7 +64,7 @@ btn_config btn_map[NUM_BUTTONS] = {
     },
 
     {
-    6,                    // channel
+    11,                    // channel
     1,                    // id
     CHANNEL_AUX_SW_MID,   // lower bound
     CHANNEL_AUX_SW_HIGH,  // upper bound
@@ -63,7 +72,7 @@ btn_config btn_map[NUM_BUTTONS] = {
     },
 
     {
-    7,                    // channel
+    5,                    // channel
     2,                    // id
     CHANNEL_AUX_SW_MID,   // lower bound
     CHANNEL_AUX_SW_HIGH,  // upper bound
@@ -71,15 +80,15 @@ btn_config btn_map[NUM_BUTTONS] = {
     },
 
     {
-    8,                    // channel
+    12,                    // channel
     3,                    // id
     CHANNEL_AUX_SW_MID,   // lower bound
     CHANNEL_AUX_SW_HIGH,  // upper bound
     false                 // invert
-    },
-
+    }
+/*
     {
-    9,                    // channel
+    5,                    // channel
     4,                    // id
     CHANNEL_AUX_SW_MID,   // lower bound
     CHANNEL_AUX_SW_HIGH,  // upper bound
@@ -87,45 +96,15 @@ btn_config btn_map[NUM_BUTTONS] = {
     },
 
     {
-    10,                    // channel
+    12,                    // channel
     5,                    // id
     CHANNEL_AUX_SW_MID,   // lower bound
     CHANNEL_AUX_SW_HIGH,  // upper bound
     false                 // invert
     },
 
-    {
-    11,                    // channel
-    6,                    // id
-    CHANNEL_AUX_SW_MID,   // lower bound
-    CHANNEL_AUX_SW_HIGH,  // upper bound
-    false                 // invert
-    },
-
-    {
-    12,                    // channel
-    7,                    // id
-    CHANNEL_AUX_SW_MID,   // lower bound
-    CHANNEL_AUX_SW_HIGH,  // upper bound
-    true                  // invert  - EX FOR INVERT
-    }
+*/
 };
 
-// Channel1 - A
-// Channel2 - E 
-// Channel3 - T
-// Channel4 - R
-// Channel5 - Aux 1
-// Channel6 - Aux 2
-// Channel7 - Aux 3
-// Channel8 - Aux 4
-// Channel9 - Aux 5
-// Channel10 - Aux 6
-// Channel11 - Aux 7
-// Channel12 - Aux 8
-// Channel13
-// Channel14
-// Channel15 - LQ
-// Channel16 - RSSI
 
 #endif

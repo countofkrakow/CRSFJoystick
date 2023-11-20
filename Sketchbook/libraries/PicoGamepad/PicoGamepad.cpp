@@ -25,167 +25,88 @@
 
 using namespace arduino;
 
-//uint8_t inputArray[35];
+
 
 PicoGamepad::PicoGamepad(bool connect, uint16_t vendor_id, uint16_t product_id, uint16_t product_release) : USBHID(get_usb_phy(), 0, 0, vendor_id, product_id, product_release)
 {
-    //_lock_status = 0;
-    for (int i = 0; i < 4; i++)
-    {
-        SetHat(i, HAT_DIR_C);
-    }
+
 }
 
 PicoGamepad::PicoGamepad(USBPhy *phy, uint16_t vendor_id, uint16_t product_id, uint16_t product_release) : USBHID(phy, 0, 0, vendor_id, product_id, product_release)
 {
-    //_lock_status = 0;
-    for (int i = 0; i < 4; i++)
-    {
-        SetHat(i, HAT_DIR_C);
-    }
-    // User or child responsible for calling connect or init
+
 }
 
 PicoGamepad::~PicoGamepad()
 {
-    // for (int i = 0; i < 35; i++)
-    // {
-    //     inputArray[i] = 0;
-    // }
-    for (int i = 0; i < 4; i++)
-    {
-        SetHat(i, HAT_DIR_C);
-    }
+
 }
 
 const uint8_t *PicoGamepad::report_desc()
 {
-    static const uint8_t reportDescriptor[] = {
-        0x05, 0x01, // USAGE_PAGE (Generic Desktop)
-        0x09, 0x04, // USAGE (Gamepad)
-        0xa1, 0x01, // COLLECTION (Application)
-        0x85, 0x01, //   REPORT_ID (1)
+    static const uint8_t reportDescriptor[] = {  // this is the same as the TX12 HID report
+    
+     0x05,0x01,    // Usage page Generic Desktop controls 
+     0x09,0x05,    // Usage Game pad
+     0xa1,0x01,    // Collection Application
+                
+        0xa1,0x00,         // Collection Physical
+            0x05,0x09,      // Usage Page (button)
+            0x19,0x01,      // Usage minimum (0x01)
+            0x29,0x18,      // Usage maximum (0x18)
+            0x15,0x00,      // Logical minimum (0)
+            0x25,0x01,      // Logical maximum (1)
+            0x95,0x18,      // Report count (24)
+            0x75,0x01,      // Report size (1)
+            0x81,0x02,      // Input (Data,Var,Abs)
+            0x05,0x01,      // Usage page (Generic Desktop Controls)
+            0x09,0x30,      // Usage (X)
+            0x09,0x31,      // Usage (Y)
+            0x09,0x32,      // Usage (Z)
+            0x09,0x33,      // Usage (Rx)
+            0x09,0x34,      // Usage (S1)(Ry)
+            0x09,0x35,      // Usage (S2)(Rz)
+            0x16,0x01,0x80, //Logical minimum (-32767)
+            0x26,0xff,0x7f, //Logical miximum (32767)
+            0x75,0x10,      // Report size(16)
+            0x95,0x06,      // Report count
+            0x81,0x02,      // Input (Data,Var,Abs)
+            0x05, 0x01,    // Usage Page (Generic Desktop Controls)
+            0x09, 0x36,    // Usage (Slider)
+            0x09, 0x36,    // Usage (Slider)
+            //0x09, 0x36,    // Usage (Slider)            
+            0x16, 0x01, 0x80, // Logical Minimum (-32767)
+            0x26, 0xFF, 0x7F, // Logical Maximum (32767)
+            0x75, 0x10,    // Report Size (16)
+            0x95, 0x02,    // Report Count (2)
+            0x81, 0x02,    // Input (Data, Var, Abs)
 
-        0x05, 0x09, // USAGE_PAGE (Button)
-        0x19, 0x01, // USAGE_MINIMUM (Button 1)
-        0x29, 0x80, // USAGE_MAXIMUM (Button 128)
-        0x15, 0x00, // LOGICAL_MINIMUM (0)
-        0x25, 0x01, // LOGICAL_MAXIMUM (1)
-        0x95, 0x80, // REPORT_COUNT (128)
-        0x75, 0x01, // REPORT_SIZE (1)
-        0x81, 0x02, // INPUT (Data,Var,Abs)
 
-        0x05, 0x01,       // USAGE_PAGE (Generic Desktop) // analog axes
-        0x09, 0x30,       // USAGE (X)
-        0x09, 0x31,       // USAGE (Y)
-        0x16, 0x01, 0x80, //LOGICAL_MINIMUM (-32767)
-        0x26, 0xFF, 0x7F, //LOGICAL_MAXIMUM (32767)
-        0x75, 0x10,       //     REPORT_SIZE (16)
-        0x95, 0x02,       // REPORT_COUNT (2)
-        0x81, 0x02,       // INPUT (Data,Var,Abs)
+            
 
-        0x09, 0x39,     // USAGE (HATSWITCH)
-        0x15, 0x00,     // LOGICAL_MINIMUM (0)
-        0x25, 0x07,     // LOGICAL_MAXIMUM (7)
-        0x35, 0x00,     // PHYSICAL_MINIMUM (0)
-        0x46, 0x38, 01, // PHYSICAL_MAXIMUM (315)
-        0x65, 0x14,     // UNIT (Eng Rot:Angular Pos)
-        0x75, 0x04,     // REPORT_SIZE (4)
-        0x95, 0x01,     // REPORT_COUNT (1)
-        0x81, 0x02,     // INPUT(Data, Var, Abs)
 
-        0x09, 0x39,     // USAGE (HATSWITCH)
-        0x15, 0x00,     // LOGICAL_MINIMUM (0)
-        0x25, 0x07,     // LOGICAL_MAXIMUM (7)
-        0x35, 0x00,     // PHYSICAL_MINIMUM (0)
-        0x46, 0x38, 01, // PHYSICAL_MAXIMUM (315)
-        0x65, 0x14,     // UNIT (Eng Rot:Angular Pos)
-        0x75, 0x04,     // REPORT_SIZE (4)
-        0x95, 0x01,     // REPORT_COUNT (1)
-        0x81, 0x02,     // INPUT(Data, Var, Abs)
 
-        0x09, 0x39,     // USAGE (HATSWITCH)
-        0x15, 0x00,     // LOGICAL_MINIMUM (0)
-        0x25, 0x07,     // LOGICAL_MAXIMUM (7)
-        0x35, 0x00,     // PHYSICAL_MINIMUM (0)
-        0x46, 0x38, 01, // PHYSICAL_MAXIMUM (315)
-        0x65, 0x14,     // UNIT (Eng Rot:Angular Pos)
-        0x75, 0x04,     // REPORT_SIZE (4)
-        0x95, 0x01,     // REPORT_COUNT (1)
-        0x81, 0x02,     // INPUT(Data, Var, Abs)
+        0xc0,   // End Collection
 
-        0x09, 0x39,     // USAGE (HATSWITCH)
-        0x15, 0x00,     // LOGICAL_MINIMUM (0)
-        0x25, 0x07,     // LOGICAL_MAXIMUM (7)
-        0x35, 0x00,     // PHYSICAL_MINIMUM (0)
-        0x46, 0x38, 01, // PHYSICAL_MAXIMUM (315)
-        0x65, 0x14,     // UNIT (Eng Rot:Angular Pos)
-        0x75, 0x04,     // REPORT_SIZE (4)
-        0x95, 0x01,     // REPORT_COUNT (1)
-        0x81, 0x02,     // INPUT(Data, Var, Abs)
-
-        0x09, 0x32,       // USAGE (Z)
-        0x09, 0x33,       // USAGE (Rx)
-        0x09, 0x34,       // USAGE (Ry)
-        0x09, 0x35,       // USAGE (Rz)   //36-37=steering s0
-        0x16, 0x01, 0x80, //LOGICAL_MINIMUM (-32767)
-        0x26, 0xFF, 0x7F, //LOGICAL_MAXIMUM (32767)
-        0x75, 0x10,       //     REPORT_SIZE (16)
-        0x95, 0x04,       //     REPORT_COUNT (4)
-        0x81, 0x02,       //     INPUT (Data, Variable, Absolute) ;20 bytes (slider 1 and slider 2)
-
-        0x05, 0x02, //   USAGE_PAGE (Simulation Controls)
-        0x09, 0xBB, //   USAGE (Throttle)
-        0x16, 0x01, 0x80, //LOGICAL_MINIMUM (-32767)
-        0x26, 0xFF, 0x7F, //LOGICAL_MAXIMUM (32767)
-        0x75, 0x10,       //     REPORT_SIZE (16)
-        0x95, 0x01,       //     REPORT_COUNT (2)
-        0x81, 0x02,                    //   INPUT (Data,Var,Abs)
-
-        0x05, 0x01,       // USAGE_PAGE (Generic Desktop) // analog axes
-        0x09, 0x36, //   USAGE (Slider)
-        0x16, 0x01, 0x80, //LOGICAL_MINIMUM (-32767)
-        0x26, 0xFF, 0x7F, //LOGICAL_MAXIMUM (32767)
-        0x75, 0x10,       //     REPORT_SIZE (16)
-        0x95, 0x01,       //     REPORT_COUNT (2)
-        0x81, 0x02,                    //   INPUT (Data,Var,Abs)
-
-        0xc0 // END_COLLECTION
+    0xc0   // End Collection
 
     };
     reportLength = sizeof(reportDescriptor);
     return reportDescriptor;
 }
 
-bool PicoGamepad::randomizeInputs()
-{
-    _mutex.lock();
 
-    HID_REPORT report;
-    report.data[0] = 0x01;
-    for (int i = 1; i < 36; i++)
-    {
-        report.data[i] = random();
-    }
-    report.length = 35;
 
-    if (!send(&report))
-    {
-        _mutex.unlock();
-        return false;
-    }
 
-    _mutex.unlock();
-    return true;
-}
+
 
 void PicoGamepad::SetButton(int idx, bool val)
 {
-    if (idx > 128 || idx < 0)
+    if (idx > 23 || idx < 0)
     {
         return;
     }
-    bitWrite(inputArray[idx / 8], idx % 8, val);
+    bitWrite(inputArray[(idx / 8)], idx % 8, val);
 }
 
 void PicoGamepad::SetX(uint16_t val)
@@ -212,85 +133,69 @@ void PicoGamepad::SetRx(uint16_t val)
     inputArray[Rx_AXIS_MSB] = MSB(val);
 }
 
-void PicoGamepad::SetRy(uint16_t val)
+void PicoGamepad::SetS1(uint16_t val)
 {
-    inputArray[Ry_AXIS_LSB] = LSB(val);
-    inputArray[Ry_AXIS_MSB] = MSB(val);
+    inputArray[S1_AXIS_LSB] = LSB(val);
+    inputArray[S1_AXIS_MSB] = MSB(val);
 }
 
-void PicoGamepad::SetRz(uint16_t val)
+void PicoGamepad::SetS2(uint16_t val)
 {
-    inputArray[Rz_AXIS_LSB] = LSB(val);
-    inputArray[Rz_AXIS_MSB] = MSB(val);
+    inputArray[S2_AXIS_LSB] = LSB(val);
+    inputArray[S2_AXIS_MSB] = MSB(val);
 }
 
-void PicoGamepad::SetThrottle(uint16_t val)
+void PicoGamepad::SetSB(uint16_t val)
 {
-    inputArray[THROTTLE_AXIS_LSB] = LSB(val);
-    inputArray[THROTTLE_AXIS_MSB] = MSB(val);
+    inputArray[SB_AXIS_LSB] = LSB(val);
+    inputArray[SB_AXIS_MSB] = MSB(val);
 }
 
-void PicoGamepad::SetS0(uint16_t val)
+void PicoGamepad::SetSC(uint16_t val)
 {
-    inputArray[S0_AXIS_LSB] = LSB(val);
-    inputArray[S0_AXIS_MSB] = MSB(val);
+    inputArray[SC_AXIS_LSB] = LSB(val);
+    inputArray[SC_AXIS_MSB] = MSB(val);
 }
 
-
-void PicoGamepad::SetHat(uint8_t hatIdx, uint8_t dir)
+void PicoGamepad::SetSE(uint16_t val)
 {
-    uint8_t hatDir[9][4] = {
-        {0, 0, 0, 0},
-        {0, 0, 0, 1},
-        {0, 0, 1, 0},
-        {0, 0, 1, 1},
-        {0, 1, 0, 0},
-        {0, 1, 0, 1},
-        {0, 1, 1, 0},
-        {0, 1, 1, 1},
-        {1, 0, 0, 0}};
-    switch (hatIdx)
+    inputArray[SE_AXIS_LSB] = LSB(val);
+    inputArray[SE_AXIS_MSB] = MSB(val);
+}
+
+void PicoGamepad::SetSF(uint16_t val)
+{
+    inputArray[SF_AXIS_LSB] = LSB(val);
+    inputArray[SF_AXIS_MSB] = MSB(val);
+}
+
+void PicoGamepad::clearReport(void)
+{
+    for (int i = 0; i < inputArraySize; i++)
     {
-    case 0:
-        for (int i = 0; i < 4; i++)
-        {
-            bitWrite(inputArray[HAT0_1], 3 - i, hatDir[dir][i]);
-        }
-        break;
-    case 1:
-        for (int i = 0; i < 4; i++)
-        {
-            bitWrite(inputArray[HAT0_1], 7 - i, hatDir[dir][i]);
-        }
-        break;
-    case 2:
-        for (int i = 0; i < 4; i++)
-        {
-            bitWrite(inputArray[HAT2_3], 3 - i, hatDir[dir][i]);
-        }
-        break;
-    case 3:
-        for (int i = 0; i < 4; i++)
-        {
-            bitWrite(inputArray[HAT2_3], 7 - i, hatDir[dir][i]);
-        }
-        break;
+        inputArray[i]=0;
+
     }
+
+    
 }
+
+
+
 
 bool PicoGamepad::send_update()
 {
     _mutex.lock();
 
     HID_REPORT report;
-    report.data[0] = 0x01;
-    for (int i = 1; i < 36; i++)
+    for (int i = 0; i < inputArraySize; i++)
     {
-        report.data[i] = inputArray[i - 1];
+        report.data[i] = inputArray[i];
+
     }
-
-    report.length = 35;
-
+    
+    report.length = inputArraySize;
+ 
     if (!send(&report))
     {
         _mutex.unlock();
@@ -301,83 +206,7 @@ bool PicoGamepad::send_update()
     return true;
 }
 
-bool PicoGamepad::send_inputs(uint8_t *values)
-{
-    _mutex.lock();
 
-    HID_REPORT report;
-    report.data[0] = 0x01;
-    for (int i = 1; i < 36; i++)
-    {
-        report.data[i] = values[i - 1];
-    }
-
-    report.length = 35;
-
-    if (!send(&report))
-    {
-        _mutex.unlock();
-        return false;
-    }
-
-    _mutex.unlock();
-    return true;
-}
-
-bool PicoGamepad::test_send(uint16_t b0, uint16_t b1, uint16_t b2, uint16_t b3, uint16_t b4, uint16_t b5, uint16_t b6, uint16_t b7,
-                            uint16_t x, uint16_t y, uint16_t hats, uint16_t z, uint16_t Rx, uint16_t Ry, uint16_t Rz, uint16_t s0, uint16_t s1)
-{
-    _mutex.lock();
-
-    HID_REPORT report;
-
-    report.data[0] = 0x01;
-    report.data[1] = LSB(b0);
-    report.data[2] = MSB(b0);
-    report.data[3] = LSB(b1);
-    report.data[4] = MSB(b1);
-    report.data[5] = LSB(b2);
-    report.data[6] = MSB(b2);
-    report.data[7] = LSB(b3);
-    report.data[8] = MSB(b3);
-    report.data[9] = LSB(b4);
-    report.data[10] = MSB(b4);
-    report.data[11] = LSB(b5);
-    report.data[12] = MSB(b5);
-    report.data[13] = LSB(b6);
-    report.data[14] = MSB(b6);
-    report.data[15] = LSB(b7);
-    report.data[16] = MSB(b7);
-    report.data[17] = LSB(x);
-    report.data[18] = MSB(x);
-    report.data[19] = LSB(y);
-    report.data[20] = MSB(y);
-    report.data[21] = LSB(hats);
-    report.data[22] = MSB(hats);
-    report.data[23] = LSB(z);
-    report.data[24] = MSB(z);
-    report.data[25] = LSB(Rx);
-    report.data[26] = MSB(Rx);
-    report.data[27] = LSB(Ry);
-    report.data[28] = MSB(Ry);
-    report.data[29] = LSB(Rz);
-    report.data[30] = MSB(Rz);
-    report.data[31] = LSB(s0);
-    report.data[32] = MSB(s0);
-    report.data[33] = LSB(s1);
-    report.data[34] = MSB(s1);
-
-    report.length = 35;
-
-    if (!send(&report))
-    {
-        _mutex.unlock();
-        return false;
-    }
-
-    _mutex.unlock();
-    return true;
-}
 
 #define DEFAULT_CONFIGURATION (1)
 #define TOTAL_DESCRIPTOR_LENGTH ((1 * CONFIGURATION_DESCRIPTOR_LENGTH) + (1 * INTERFACE_DESCRIPTOR_LENGTH) + (1 * HID_DESCRIPTOR_LENGTH) + (2 * ENDPOINT_DESCRIPTOR_LENGTH))
