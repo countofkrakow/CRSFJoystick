@@ -73,23 +73,20 @@ Once uploaded, the device should be recgonzed by your computer as a HID Joystick
 
 
 
-
 Installation 
 
 * copy Sketchbook directory to your PC 
 * Open sketchbook/crsf_Joystick with Arduino IDE
 * Change the directory in file->preferences to the sketchbook directory
-* Make sure the Squid in connected to USB 
+* Make sure the Squid Stick in connected to USB 
 * Change the port to the Squid com port
 * Compile and upload 
-* In TX12 set ELRS to 333Hz ,telemetry off ,Switch mode 16ch rate/2
 
 
 Configuration
 
-* make sure that you define the channels as in the table above
-* if needed , open "Set up USB game controllers" in windows to test and clibrate 
-* calibrate! and make sure to do so without trim. once clibrated , you can use trim as needed
+* Define the channels as in the table above
+* If needed , open "Set up USB game controllers" in windows to test and calibrate 
 
 
 *Note additional button mappings can be created in caliration.h*
