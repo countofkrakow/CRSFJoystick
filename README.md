@@ -50,30 +50,47 @@ On first upload to the pico, you will need to hold in the bootsel buttion before
 Once uploaded, the device should be recgonzed by your computer as a HID Joystick.
 
 # Mappings
-This was a quick map and is not fully featured.
+#Channel mappings
 
-On link up/down the onboard Pi Pico LED will light indicating connection
+(Mode2)  
 
-*NOTE* Channel 5, 6, 7, and 8 are mapped both to analog axis as well as joystick buttons.
+| TX12 | Channel | PC  | Info              |
+|------|---------|-----|-------------------|
+| X    | CH1     | X   | Ail (Analog)      |
+| Y    | CH2     | Y   | Ele (Analog)      |
+| Z    | CH3     | Z   | Thr (Analog)      |
+| Xr   | CH4     | Xr  | Rud (Analog)      |
+| S1   | CH6     | Yr  | slider1 (Analog)  |
+| S2   | CH7     | Zr  | slider2 (Analog)  |
+| SA   | CH8     | B1  | 2 states          |
+| SB   | CH9     | SB  | 3 states          |
+| SC   | CH10    | SC  | 3 states          |
+| SD   | CH11    | B2  | 2 states          |
+| SE   | CH5     | B3  | 2 states          |
+| SF   | CH12    | B4  | 2 states          |
 
-| Channel     | Logical Mapping  | Joystick Mapping |
-| ----------- | ---------------- | ---------------- |
-| 1           | A                | X                |
-| 2           | E                | Y                |
-| 3           | T                | Rx               |
-| 4           | R                | Ry               |
-| 5           | Channel 5 (Full) AND AUX1 (1510-2011) | Z  AND Button 0 |
-| 6           | Channel 6 (Full) AND AUX2 (1510-2011) | Rz AND Button 1 |
-| 7           | Channel 7 (Full) AND AUX3 (1510-2011) | S0 AND Button 2 |
-| 8           | Channel 8 (Full) AND AUX4 (1510-2001) | S1 AND Button 3 |
-| 9           | AUX5 (1510-2011) | Button 4         |
-| 10          | AUX6 (1510-2011) | Button 5         |
-| 11          | AUX7 (1510-2011) | Button 6         |
-| 12          | AUX8 (1510-2011) | Button 7         |
-| 13          | Not Used         | Not Used         |
-| 14          | Not Used         | Not Used         |
-| 15          | LQ - Not Used    | Not Used         |
-| 16          | RSSI - Not Used  | Not Used         |
+
+
+
+
+
+Installation 
+
+* copy Sketchbook directory to your PC 
+* Open sketchbook/crsf_Joystick with Arduino IDE
+* Change the directory in file->preferences to the sketchbook directory
+* Make sure the Squid in connected to USB 
+* Change the port to the Squid com port
+* Compile and upload 
+* In TX12 set ELRS to 333Hz ,telemetry off ,Switch mode 16ch rate/2
+
+
+Configuration
+
+* make sure that you define the channels as in the table above
+* if needed , open "Set up USB game controllers" in windows to test and clibrate 
+* calibrate! and make sure to do so without trim. once clibrated , you can use trim as needed
+
 
 *Note additional button mappings can be created in caliration.h*
 
