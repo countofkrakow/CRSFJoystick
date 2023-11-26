@@ -55,6 +55,8 @@ void packetChannels()
       JOYSTICK_LOW,              \
       JOYSTICK_HIGH);
     gamepad.SetX(map_data);
+
+
     
     // Y - Channel 2 - Ele
     channel_data = crsf.getChannel(2);
@@ -65,6 +67,8 @@ void packetChannels()
       JOYSTICK_HIGH);
     gamepad.SetY(map_data);
 
+
+
     // Z - Channel 3 - Thr
     channel_data = crsf.getChannel(3);
     map_data = map(channel_data, \
@@ -74,6 +78,8 @@ void packetChannels()
       JOYSTICK_HIGH);
     gamepad.SetZ(map_data);
 
+ 
+    
     // Rx - Channel 4 - Rud
     channel_data = crsf.getChannel(4);
     map_data = map(channel_data, \
@@ -82,6 +88,12 @@ void packetChannels()
       JOYSTICK_LOW,              \
       JOYSTICK_HIGH);
     gamepad.SetRx(map_data);
+
+
+
+
+
+
 
     // S1 - Channel 6
     channel_data = crsf.getChannel(6);
@@ -126,7 +138,7 @@ void packetChannels()
       CHANNEL_5_HIGH_EP,         \
       JOYSTICK_LOW,              \
       JOYSTICK_HIGH);
-    gamepad.SetSE(map_data);
+    //gamepad.SetSE(map_data);
 
   // SF - Channel 12
     channel_data = crsf.getChannel(12);
@@ -135,7 +147,7 @@ void packetChannels()
       CHANNEL_12_HIGH_EP,         \
       JOYSTICK_LOW,              \
       JOYSTICK_HIGH);
-    gamepad.SetSF(map_data);
+    //gamepad.SetSF(map_data);
 
 
  
@@ -164,6 +176,12 @@ void packetChannels()
       Serial.print(" m: "); Serial.println(map_data);
       #endif
     }
+    
+
+
+
+
+
 
     gamepad.send_update();
 }
