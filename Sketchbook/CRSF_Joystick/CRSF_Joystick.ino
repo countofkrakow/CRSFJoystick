@@ -286,6 +286,11 @@ static void checkSerialInNormal()
                     return;
             }
         }
+        else if (c == '#')
+        {
+            serialInBuffLen = 0;
+            handleSerialCommand("#");
+        }
         else
         {
             serialInBuff[serialInBuffLen++] = c;
